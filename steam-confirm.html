@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>Подтверждение аккаунта Steam</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app steam-page steam-confirm-page">
+
+    <!-- Верхний блок, как на steam.html -->
+    <header class="steam-top">
+      <a href="steam.html" class="back-btn">&lt;</a>
+      <h1 class="steam-title">
+        Пополнить кошелёк<br>Steam
+      </h1>
+    </header>
+
+    <!-- Карточка сервиса -->
+    <section class="steam-product">
+      <div class="steam-logo">
+        
+      </div>
+      <div class="steam-product-text">
+        <div class="steam-product-title">
+          Моментальное пополнение
+        </div>
+        <div class="steam-product-subtitle">
+          кошелька Стим
+        </div>
+      </div>
+    </section>
+
+    <!-- Можно оставить пустое тело формы, т.к. оно будет прикрыто оверлеем -->
+  </div>
+
+  <!-- Модальное окно подтверждения -->
+  <div class="confirm-overlay">
+    <div class="confirm-modal">
+      <a href="steam.html" class="confirm-close">×</a>
+
+      <div class="confirm-title">Это ваш аккаунт?</div>
+        <img src="/img/ikonka.webp" alt="ikonka" class="confirm-img">
+      <div class="confirm-avatar">
+      </div>
+
+      <div class="confirm-username">sancho_pancho</div>
+
+      <div class="confirm-actions">
+        <a href="payment-success.html" class="confirm-btn confirm-btn-light">Да</a>
+        <button class="confirm-btn confirm-btn-red">Сменить</button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

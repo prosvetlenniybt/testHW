@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>Пополнить кошелёк Steam</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app steam-page">
+
+    <!-- Верхний блок -->
+    <header class="steam-top">
+      <a href="vitrina.html" class="back-btn">&lt;</a>
+      <h1 class="steam-title">
+        Пополнить кошелёк<br>Steam
+      </h1>
+    </header>
+
+    <!-- Карточка сервиса -->
+    <section class="steam-product">
+      <div class="steam-logo">
+      </div>
+      <div class="steam-product-text">
+        <div class="steam-product-title">
+          Моментальное пополнение
+        </div>
+        <div class="steam-product-subtitle">
+          кошелька Стим
+        </div>
+      </div>
+    </section>
+
+    <!-- Форма -->
+    <section class="steam-form">
+
+      <!-- Логин -->
+      <div class="steam-input-wrapper">
+        <div class="steam-input-shell">
+          <input
+            type="text"
+            class="steam-input"
+            placeholder="Укажите логин *"
+          />
+          <button class="steam-input-helper">
+            Где найти
+            <span class="helper-icon">?</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Сумма -->
+      <div class="steam-amount-block">
+        <div class="steam-amount-label">Введите сумму к оплате</div>
+        <div class="steam-amount-row">
+          <button class="amount-chip">500 ₽</button>
+          <button class="amount-chip">1 000 ₽</button>
+          <button class="amount-chip">2 000 ₽</button>
+        </div>
+      </div>
+
+      <!-- Инструкция -->
+      <section class="steam-instruction">
+        <div class="instruction-pill">Инструкция</div>
+        <ol class="instruction-list">
+          <li>Введите свой логин аккаунта. (как узнать логин?).</li>
+          <li>Введите сумму, на которую хотите пополнить баланс Steam.</li>
+          <li>Проверьте, что указали именно логин, а не никнейм.</li>
+          <li>Нажмите кнопку «Купить».</li>
+          <li>Оплатите покупку.</li>
+          <li>
+            После успешной оплаты деньги поступят на баланс аккаунта в течение 2–10 минут.
+            При возникновении вопросов <a href="#" class="support-link">свяжитесь с поддержкой</a>.
+          </li>
+        </ol>
+      </section>
+
+      <!-- Кнопка оплаты -->
+      <a href="steam-confirm.html" class="steam-pay-btn">
+        Оплатить
+      </a>
+    </section>
+  </div>
+</body>
+</html>
