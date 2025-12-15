@@ -450,6 +450,7 @@
     gltfLoader.setDRACOLoader(dracoLoader);
 
     let monster = null;
+    
 
     gltfLoader.load(
       "monster.glb",
@@ -467,24 +468,31 @@
   "monster.glb",
   (gltf) => {
     monster = gltf.scene;
+    // 1) bounds модели
+const box = new THREE.Box3().setFromObject(monster);
+const size = box.getSize(new THREE.Vector3());
+const center = box.getCenter(new THREE.Vector3());
 
-    // 1. Bounding box модели
-    const box = new THREE.Box3().setFromObject(monster);
-    const size = box.getSize(new THREE.Vector3());
-    const center = box.getCenter(new THREE.Vector3());
+// 2) центрируем модель
+monster.position.sub(center);
 
-    // 2. Центрируем модель
-    monster.position.sub(center);
+// 3) FIT-камера с учетом aspect (чтобы не резало ни по ширине, ни по высоте)
+const fitOffset = 1.8; // увеличь до 2.0 если всё ещё режет
+const aspect = camera.aspect;
 
-    // 3. Подгоняем камеру под размер модели
-    const maxDim = Math.max(size.x, size.y, size.z);
-    const fov = camera.fov * (Math.PI / 180);
-    const cameraZ = maxDim / (2 * Math.tan(fov / 2));
+const vFOV = THREE.MathUtils.degToRad(camera.fov);             // вертикальный
+const hFOV = 2 * Math.atan(Math.tan(vFOV / 2) * aspect);       // горизонтальный
 
-    camera.position.set(0, 0.2, cameraZ * 1.4);
-    camera.lookAt(0, 0, 0);
-    camera.updateProjectionMatrix();
+const distV = (size.y / 2) / Math.tan(vFOV / 2);
+const distH = (size.x / 2) / Math.tan(hFOV / 2);
+const distance = Math.max(distV, distH) * fitOffset;
 
+camera.position.set(0, 0.2, distance);
+camera.lookAt(0, 0, 0);
+camera.near = distance / 100;
+camera.far  = distance * 100;
+camera.updateProjectionMatrix();
+    
     scene.add(monster);
     console.log("Модель подогнана и добавлена в сцену");
   },
