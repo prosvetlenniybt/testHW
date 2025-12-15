@@ -463,13 +463,37 @@
         box.getCenter(center);
 
         monster.position.sub(center);
+        gltfLoader.load(
+  "monster.glb",
+  (gltf) => {
+    monster = gltf.scene;
 
-        const targetHeight = 1.2;
-        const scale = targetHeight / (size.y || 1);
-        monster.scale.setScalar(scale);
+    // 1. Bounding box модели
+    const box = new THREE.Box3().setFromObject(monster);
+    const size = box.getSize(new THREE.Vector3());
+    const center = box.getCenter(new THREE.Vector3());
 
-        monster.position.y = -targetHeight / 2 + 1.3;
+    // 2. Центрируем модель
+    monster.position.sub(center);
 
+    // 3. Подгоняем камеру под размер модели
+    const maxDim = Math.max(size.x, size.y, size.z);
+    const fov = camera.fov * (Math.PI / 180);
+    const cameraZ = maxDim / (2 * Math.tan(fov / 2));
+
+    camera.position.set(0, 0.2, cameraZ * 1.4);
+    camera.lookAt(0, 0, 0);
+    camera.updateProjectionMatrix();
+
+    scene.add(monster);
+    console.log("Модель подогнана и добавлена в сцену");
+  },
+  undefined,
+  (error) => console.error(error)
+);
+
+
+       
         monster.traverse((child) => {
           if (child.isMesh) {
             child.castShadow = false;
