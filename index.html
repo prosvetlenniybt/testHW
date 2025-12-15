@@ -448,43 +448,50 @@
 
     const gltfLoader = new GLTFLoader();
     gltfLoader.setDRACOLoader(dracoLoader);
-
     let monster = null;
-    
-        gltfLoader.load(
+
+gltfLoader.load(
   "monster.glb",
   (gltf) => {
     monster = gltf.scene;
-    // 1) bounds модели
-const box = new THREE.Box3().setFromObject(monster);
-const size = box.getSize(new THREE.Vector3());
-const center = box.getCenter(new THREE.Vector3());
 
-// 2) центрируем модель
-monster.position.sub(center);
+    // bounds модели
+    const box = new THREE.Box3().setFromObject(monster);
+    const size = box.getSize(new THREE.Vector3());
+    const center = box.getCenter(new THREE.Vector3());
 
-// 3) FIT-камера с учетом aspect (чтобы не резало ни по ширине, ни по высоте)
-const fitOffset = 1.8; // увеличь до 2.0 если всё ещё режет
-const aspect = camera.aspect;
+    // центрируем модель
+    monster.position.sub(center);
 
-const vFOV = THREE.MathUtils.degToRad(camera.fov);             // вертикальный
-const hFOV = 2 * Math.atan(Math.tan(vFOV / 2) * aspect);       // горизонтальный
+    // FIT-камера с учетом aspect
+    const fitOffset = 2.0; // безопасное значение
+    const aspect = camera.aspect;
 
-const distV = (size.y / 2) / Math.tan(vFOV / 2);
-const distH = (size.x / 2) / Math.tan(hFOV / 2);
-const distance = Math.max(distV, distH) * fitOffset;
+    const vFOV = THREE.MathUtils.degToRad(camera.fov);
+    const hFOV = 2 * Math.atan(Math.tan(vFOV / 2) * aspect);
 
-camera.position.set(0, 0.2, distance);
-camera.lookAt(0, 0, 0);
-camera.near = distance / 100;
-camera.far  = distance * 100;
-camera.updateProjectionMatrix();
-    
+    const distV = (size.y / 2) / Math.tan(vFOV / 2);
+    const distH = (size.x / 2) / Math.tan(hFOV / 2);
+    const distance = Math.max(distV, distH) * fitOffset;
+
+    camera.position.set(0, 0.2, distance);
+    camera.lookAt(0, 0, 0);
+    camera.near = distance / 100;
+    camera.far  = distance * 100;
+    camera.updateProjectionMatrix();
+
+    monster.traverse((child) => {
+      if (child.isMesh) {
+        child.castShadow = false;
+        child.receiveShadow = false;
+      }
+    });
+
     scene.add(monster);
-    console.log("Модель подогнана и добавлена в сцену");
+    console.log("Модель загружена и видна");
   },
   undefined,
-  (error) => console.error(error)
+  (error) => console.error("Ошибка загрузки monster.glb", error)
 );
 
 
